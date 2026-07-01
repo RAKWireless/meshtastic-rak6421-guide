@@ -37,7 +37,7 @@ fi
 # --no-init: Skip interactive settings.js initialization (we use our own)
 echo ""
 echo "Installing Node-RED using official script (installs Node.js + Node-RED)..."
-bash <(curl -sL https://github.com/node-red/linux-installers/releases/latest/download/update-nodejs-and-nodered-deb) --confirm-install --confirm-pi --no-init
+bash <(curl -sL https://github.com/node-red/linux-installers/releases/latest/download/install-update-nodered-deb) --confirm-install --confirm-pi --no-init
 
 # Ensure our settings.js is in place (in case installer overwrote it)
 echo ""
