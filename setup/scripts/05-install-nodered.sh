@@ -36,9 +36,31 @@ fi
 # This can take 20-30 minutes on slower Pi models.
 # --no-init: Skip interactive settings.js initialization (we use our own)
 echo ""
-echo "Installing Node-RED using official script (installs Node.js + Node-RED)..."
-bash <(curl -sL https://github.com/node-red/linux-installers/releases/latest/download/update-nodejs-and-nodered-deb) --confirm-install --confirm-pi --no-init
+echo "Installing Node-RED..."
 
+# Download current official installer
+TMP_SCRIPT=$(mktemp)
+
+INSTALL_URL="https://raw.githubusercontent.com/node-red/linux-installers/master/deb/update-nodejs-and-nodered"
+
+echo "Downloading installer..."
+
+if ! curl -fsSL "$INSTALL_URL" -o "$TMP_SCRIPT"; then
+    echo ""
+    echo "ERROR: Unable to download the official Node-RED installer."
+    echo "URL: $INSTALL_URL"
+    exit 1
+fi
+
+chmod +x "$TMP_SCRIPT"
+
+echo "Running installer..."
+sudo bash "$TMP_SCRIPT" \
+    --confirm-install \
+    --confirm-pi \
+    --no-init
+
+rm -f "$TMP_SCRIPT"
 # Ensure our settings.js is in place (in case installer overwrote it)
 echo ""
 echo "Verifying settings.js..."
